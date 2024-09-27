@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "E-Commerce.API", "E-Commerc
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{170B3794-1B34-43F6-984E-C4C3C3819899}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domin", "Core\Domin\Domin.csproj", "{E7DE5513-D877-44D1-859A-B22AACF7EB50}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Core\Domin\Domain.csproj", "{E7DE5513-D877-44D1-859A-B22AACF7EB50}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Service", "Core\Service\Service.csproj", "{C8FD2462-4A4B-406C-A397-ADB039CC812D}"
 EndProject
