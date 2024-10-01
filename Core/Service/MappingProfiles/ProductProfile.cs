@@ -8,7 +8,10 @@
 				ForMember(b => b.BrandName,
 				o => o.MapFrom(s => s.ProductBrand.Name)).
 				ForMember(t => t.TypeName,
-				o => o.MapFrom(s => s.ProductBrand.Name));
+				o => o.MapFrom(s => s.ProductBrand.Name)).
+				ForMember(p=>p.PictureUrl,
+				o=>o.MapFrom<PictureResolver>());
+			// class inherit from IValueResolver
 
 			CreateMap<ProductBrand, BrandResultDto>();
 			
