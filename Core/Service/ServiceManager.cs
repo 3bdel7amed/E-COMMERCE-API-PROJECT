@@ -7,6 +7,8 @@ namespace Service
 		public ServiceManager(IUnitOfWork unitOfWork, IMapper mapper)
 			=> _productService = new Lazy<IProductService>(
 				() => new ProductService(unitOfWork, mapper));
-		public IProductService ProductService()=>_productService.Value;
+		public IProductService ProductService() => _productService.Value;
+
+		
 	}
 }

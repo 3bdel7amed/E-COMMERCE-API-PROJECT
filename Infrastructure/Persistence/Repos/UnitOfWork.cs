@@ -13,11 +13,10 @@ namespace Persistence.Repos
 		readonly StoreContext storeContext;
 		//readonly Dictionary<string, object> storedRepos;
 		readonly ConcurrentDictionary<string, object> storedRepos;
-		public UnitOfWork(StoreContext _storeContext, ConcurrentDictionary<string, object> _storedRepos/*,Dictionary<string, object> _storedRepos*/)
+		public UnitOfWork(StoreContext _storeContext)
 		{
 			storeContext = _storeContext;
-			storedRepos = _storedRepos;
-			//storedRepos = _storedRepos;
+			storedRepos = new();
 		}
 		public async Task<int> SaveChangesAsync() => await storeContext.SaveChangesAsync();
 
@@ -25,17 +24,17 @@ namespace Persistence.Repos
 			=> (IGenericRepo<TEntity, TKey>) // Casting
 			storedRepos.GetOrAdd(typeof(TEntity).Name,
 				_ => new GenericRepo<TEntity, TKey>(storeContext));
-		#region Dictionary
+			#region Dictionary
 		//{
-		//string type = typeof(TEntity).Name;
+		//	string type = typeof(TEntity).Name;
 
-		//if (storedRepos.ContainsKey(type))  return (IGenericRepo<TEntity, TKey>)storedRepos[type];
+		//	if (storedRepos.ContainsKey(type)) return (IGenericRepo<TEntity, TKey>)storedRepos[type];
 
-		//var repo = new GenericRepo<TEntity, TKey>(storeContext);
+		//	var repo = new GenericRepo<TEntity, TKey>(storeContext);
 
-		//storedRepos[type] = repo;
+		//	storedRepos[type] = repo;
 
-		//return repo; 
+		//	return repo;
 		//}
 		#endregion
 

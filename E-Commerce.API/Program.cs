@@ -1,5 +1,8 @@
 
 
+using Service;
+using Service.Abstraction;
+
 namespace E_Commerce.API
 {
 	public class Program
@@ -11,10 +14,11 @@ namespace E_Commerce.API
 
 			// Add services to the container.
 
-			builder.Services.AddControllers();
+			builder.Services.AddControllers().AddApplicationPart(typeof(Presentation.AssemblyReference).Assembly);
 			//builder.Services.AddScoped<IDbInitializer, DbInitializer>();
+			//builder.Services.AddScoped<IServiceManager, ServiceManager>();
 			builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-			builder.Services.AddAutoMapper(typeof(Service.AssemblyReference).Assembly);
+			builder.Services.AddAutoMapper(typeof(AssemblyReference).Assembly);
 			builder.Services.AddDbContext<StoreContext>
 				(o => o.UseSqlServer(builder.Configuration.GetConnectionString("DefaultSQLConnection")));
 
