@@ -10,7 +10,7 @@ namespace Domain.Contracts.IRepos
 	public interface IGenericRepo<TEntity, TKey> where TEntity : BaseEntity<TKey>
 	{
 		public Task<TEntity?> GetAsync(TKey Id);
-		public Task<IEnumerable<TEntity?>> GetAllAsync(bool tracking);
+		public Task<IEnumerable<TEntity?>> GetAllAsync(bool tracking = false);
 		public Task AddAsync(TEntity entity);
 		public void Update(TEntity entity);
 		public void Delete(TEntity entity);

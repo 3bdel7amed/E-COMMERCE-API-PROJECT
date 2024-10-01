@@ -1,4 +1,3 @@
-using System.Globalization;
 
 
 namespace E_Commerce.API
@@ -14,6 +13,8 @@ namespace E_Commerce.API
 
 			builder.Services.AddControllers();
 			//builder.Services.AddScoped<IDbInitializer, DbInitializer>();
+			builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+			builder.Services.AddAutoMapper(typeof(Service.AssemblyReference).Assembly);
 			builder.Services.AddDbContext<StoreContext>
 				(o => o.UseSqlServer(builder.Configuration.GetConnectionString("DefaultSQLConnection")));
 
