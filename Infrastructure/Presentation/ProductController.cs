@@ -9,7 +9,7 @@ namespace Presentation
 		[HttpGet] // Index
 		public async Task<ActionResult<IEnumerable<ProductResultDto>>> GetProducts()
 		{
-			var Products = ServiceManager.ProductService().GetProductsAsync();
+			var Products = await ServiceManager.ProductService().GetProductsAsync();
 			return Ok(Products);
 		}
 		[HttpGet("Brands")]
@@ -21,13 +21,13 @@ namespace Presentation
 		[HttpGet("Types")]
 		public async Task<ActionResult<IEnumerable<TypeResultDto>>> GetTypes()
 		{
-			var Types = ServiceManager.ProductService().GetTypesAsync();
+			var Types = await ServiceManager.ProductService().GetTypesAsync();
 			return Ok(Types);
 		}
 		[HttpGet("{Id}")] 
 		public async Task<ActionResult<ProductResultDto>> GetProduct(int Id)
 		{
-			var Product = ServiceManager.ProductService().GetProductAsync(Id);
+			var Product = await ServiceManager.ProductService().GetProductAsync(Id);
 			return Ok(Product);
 		}
 	}
