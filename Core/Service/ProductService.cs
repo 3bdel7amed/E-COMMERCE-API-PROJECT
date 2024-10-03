@@ -1,4 +1,6 @@
 ﻿
+using Service.Specifications;
+
 namespace Service
 {
 	class ProductService(IUnitOfWork UnitOfWork, IMapper Mapper) : IProductService
@@ -22,14 +24,14 @@ namespace Service
 
 		public async Task<IEnumerable<ProductResultDto>> GetProductsAsync()
 		{
-			var Products = await UnitOfWork.GetRepo<Product, int>().GetAllAsync();
+			var Products = await UnitOfWork.GetRepo<Product, int>().GetAllAsync(new ProductSpecifications());
 			var productsDto = Mapper.Map<IEnumerable<ProductResultDto>>(Products);
 			return productsDto;
 		}
 
 		public async Task<ProductResultDto> GetProductAsync(int Id)
 		{
-			var Product = await UnitOfWork.GetRepo<Product, int>().GetAsync(Id);
+			var Product = await UnitOfWork.GetRepo<Product, int>().GetAsync(new ProductSpecifications(Id));
 			var productsDto = Mapper.Map<ProductResultDto>(Product);
 			return productsDto;
 		}
