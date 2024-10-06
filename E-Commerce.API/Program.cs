@@ -1,5 +1,7 @@
-using System.Globalization;
 
+
+using Service;
+using Service.Abstraction;
 
 namespace E_Commerce.API
 {
@@ -12,8 +14,11 @@ namespace E_Commerce.API
 
 			// Add services to the container.
 
-			builder.Services.AddControllers();
-			//builder.Services.AddScoped<IDbInitializer, DbInitializer>();
+			builder.Services.AddControllers().AddApplicationPart(typeof(Presentation.AssemblyReference).Assembly);
+			builder.Services.AddScoped<IDbInitializer, DbInitializer>();
+			builder.Services.AddScoped<IServiceManager, ServiceManager>();
+			builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+			builder.Services.AddAutoMapper(typeof(AssemblyReference).Assembly);
 			builder.Services.AddDbContext<StoreContext>
 				(o => o.UseSqlServer(builder.Configuration.GetConnectionString("DefaultSQLConnection")));
 
@@ -23,7 +28,7 @@ namespace E_Commerce.API
 
 			var app = builder.Build();
 
-			//await DataSeeding(app);
+			await DataSeeding(app);
 
 			// Configure the HTTP request pipeline.
 			if (app.Environment.IsDevelopment())
@@ -31,11 +36,11 @@ namespace E_Commerce.API
 				app.UseSwagger();
 				app.UseSwaggerUI();
 			}
+			app.UseStaticFiles();
 
 			app.UseHttpsRedirection();
 
 			app.UseAuthorization();
-
 
 			app.MapControllers();
 
