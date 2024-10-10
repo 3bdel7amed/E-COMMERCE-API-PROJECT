@@ -7,14 +7,20 @@ using System.Threading.Tasks;
 
 namespace Domain.Contracts.Specifications
 {
-	public class Specifications<T>
+	public abstract class Specifications<T>
 	{
-        public Expression<Func<T,bool>>? Criteria { get; }
+		// Ctor To Init Criteria 
+		public Specifications(Expression<Func<T, bool>>? criteria) => Criteria = criteria;
+		// Props
+		public Expression<Func<T, bool>>? Criteria { get; }
 		public List<Expression<Func<T, object>>> IncludeExpressions { get; } = new();
-        public Specifications(Expression<Func<T, bool>>? criteria)
-		{
-			Criteria = criteria;
-		}
+		public Expression<Func<T, object>> OrderBy { get; private set; }
+		public Expression<Func<T, object>> OrderByDesc { get; private set; }
+		// Add Include To Include List
 		public void AddInclude(Expression<Func<T, object>> Ex) => IncludeExpressions.Add(Ex);
+		// Set Order By
+		public void SetOrderBy(Expression<Func<T, object>> Ex) => OrderBy = Ex;
+		public void SetOrderByDesc(Expression<Func<T, object>> Ex) => OrderByDesc = Ex;
+
 	}
 }
