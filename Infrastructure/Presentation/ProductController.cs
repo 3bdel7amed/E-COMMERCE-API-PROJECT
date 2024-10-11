@@ -7,9 +7,9 @@ namespace Presentation
 	public class ProductController(IServiceManager ServiceManager) : ControllerBase
 	{
 		[HttpGet] // Index
-		public async Task<ActionResult<PaginatedResultDto<ProductResultDto>>> GetProducts(string?sort, int? brandId,int? typeId,int pageSize = 10,int pageIndex = 1)
+		public async Task<ActionResult<PaginatedResultDto<ProductResultDto>>> GetProducts(string?sort, int? brandId,int? typeId,int pageSize = 10,int pageIndex = 1,string?search="")
 		{
-			var Products = await ServiceManager.ProductService().GetProductsAsync(sort,brandId,typeId,pageSize,pageIndex);
+			var Products = await ServiceManager.ProductService().GetProductsAsync(sort,brandId,typeId,pageSize,pageIndex,search);
 			return Ok(Products);
 		}
 		[HttpGet("Brands")]

@@ -22,11 +22,11 @@ namespace Service
 			return TypesDto;
 		}
 
-		public async Task<PaginatedResultDto<ProductResultDto>> GetProductsAsync(string? sort, int? brandId, int? typeId, int pageSize , int pageIndex)
+		public async Task<PaginatedResultDto<ProductResultDto>> GetProductsAsync(string? sort, int? brandId, int? typeId, int pageSize , int pageIndex , string? search)
 		{
-			var Products = await UnitOfWork.GetRepo<Product, int>().GetAllAsync(new ProductSpecifications(sort, brandId, typeId, pageSize, pageIndex));
+			var Products = await UnitOfWork.GetRepo<Product, int>().GetAllAsync(new ProductSpecifications(sort, brandId, typeId, pageSize, pageIndex,search));
 			var ProductsDto = Mapper.Map<IEnumerable<ProductResultDto>>(Products);
-			var totalProducts = await UnitOfWork.GetRepo<Product, int>().GetAllAsync(new PaginatedResultSpecifications(sort, brandId, typeId, pageSize, pageIndex));
+			var totalProducts = await UnitOfWork.GetRepo<Product, int>().GetAllAsync(new PaginatedResultSpecifications(sort, brandId, typeId, pageSize, pageIndex,search));
 			var PaginatedResult = new PaginatedResultDto<ProductResultDto>(
 				ProductsDto.Count(),
 				pageIndex,

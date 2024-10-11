@@ -16,11 +16,12 @@ namespace Service.Specifications
 			AddInclude(p => p.ProductBrand);
 			AddInclude(p => p.ProductType);
 		}
-		public ProductSpecifications(string? sort, int? brandId, int? typeId, int pageSize, int pageIndex)
+		public ProductSpecifications(string? sort, int? brandId, int? typeId, int pageSize, int pageIndex,string?search)
 			// Handling Filtering
 			: base(p =>
 			(!typeId.HasValue || p.TypeId == typeId) &&
-			(!brandId.HasValue || p.BrandId == brandId))
+			(!brandId.HasValue || p.BrandId == brandId)&&
+			(string.IsNullOrWhiteSpace(search)||p.Name.ToUpper().Contains(search.ToUpper().Trim())))
 		{
 			// Adding Includes
 			AddInclude(p => p.ProductBrand);

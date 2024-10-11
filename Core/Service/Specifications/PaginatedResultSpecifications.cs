@@ -10,11 +10,12 @@ namespace Service.Specifications
 {
 	internal class PaginatedResultSpecifications : Specifications<Product>
 	{
-        public PaginatedResultSpecifications(string? sort, int? brandId, int? typeId, int pageSize, int pageIndex)
+        public PaginatedResultSpecifications(string? sort, int? brandId, int? typeId, int pageSize, int pageIndex, string? search)
 			// Handling Filtering
 			: base(p =>
 			(!typeId.HasValue || p.TypeId == typeId) &&
-			(!brandId.HasValue || p.BrandId == brandId))
+			(!brandId.HasValue || p.BrandId == brandId) &&
+			(string.IsNullOrWhiteSpace(search) || p.Name.ToUpper().Contains(search.ToUpper().Trim())))
         {
             
         }
