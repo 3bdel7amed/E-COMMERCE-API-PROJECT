@@ -22,11 +22,17 @@ namespace Service
 			return TypesDto;
 		}
 
-		public async Task<IEnumerable<ProductResultDto>> GetProductsAsync(string? sort, int? brandId, int? typeId, int pageSize , int pageIndex)
+		public async Task<PaginatedResultDto<ProductResultDto>> GetProductsAsync(string? sort, int? brandId, int? typeId, int pageSize , int pageIndex)
 		{
 			var Products = await UnitOfWork.GetRepo<Product, int>().GetAllAsync(new ProductSpecifications(sort, brandId, typeId, pageSize, pageIndex));
-			var productsDto = Mapper.Map<IEnumerable<ProductResultDto>>(Products);
-			return productsDto;
+			var ProductsDto = Mapper.Map<IEnumerable<ProductResultDto>>(Products);
+			var totalProducts = await UnitOfWork.GetRepo<Product, int>().GetAllAsync(new PaginatedResultSpecifications(sort, brandId, typeId, pageSize, pageIndex));
+			var PaginatedResult = new PaginatedResultDto<ProductResultDto>(
+				ProductsDto.Count(),
+				pageIndex,
+				totalProducts.Count(), 
+				ProductsDto);
+			return PaginatedResult;
 		}
 
 		public async Task<ProductResultDto> GetProductAsync(int Id)
