@@ -16,7 +16,7 @@ namespace Service.Specifications
 			AddInclude(p => p.ProductBrand);
 			AddInclude(p => p.ProductType);
 		}
-		public ProductSpecifications(string? sort, int? brandId, int? typeId)
+		public ProductSpecifications(string? sort, int? brandId, int? typeId, int pageSize, int pageIndex)
 			// Handling Filtering
 			: base(p =>
 			(!typeId.HasValue || p.TypeId == typeId) &&
@@ -25,6 +25,11 @@ namespace Service.Specifications
 			// Adding Includes
 			AddInclude(p => p.ProductBrand);
 			AddInclude(p => p.ProductType);
+
+			// Apply Pagination
+			if (pageSize > 10 || pageSize < 1) pageSize = 10;
+			ApplyPagination(pageSize, pageIndex);
+
 
 			// Handling Sorting
 			if (!string.IsNullOrWhiteSpace(sort))

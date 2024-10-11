@@ -14,6 +14,10 @@ namespace Persistence.Repos
 			var query = InQuery;
 			if (specifications.Criteria is not null) query = query.Where(specifications.Criteria);
 			foreach (var item in specifications.IncludeExpressions) query = query.Include(item);
+			if (specifications.IsPaginated)
+			{
+				query = query.Skip(specifications.Skip).Take(specifications.Take);
+			}
 			return query;
 		}
 	}
