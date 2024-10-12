@@ -1,6 +1,8 @@
 
 
+using E_Commerce.API.Factories;
 using E_Commerce.API.MiddleWares;
+using Microsoft.AspNetCore.Mvc;
 using Service;
 using Service.Abstraction;
 
@@ -22,6 +24,10 @@ namespace E_Commerce.API
 			builder.Services.AddAutoMapper(typeof(AssemblyReference).Assembly);
 			builder.Services.AddDbContext<StoreContext>
 				(o => o.UseSqlServer(builder.Configuration.GetConnectionString("DefaultSQLConnection")));
+			builder.Services.Configure<ApiBehaviorOptions>(Options =>
+			{
+				Options.InvalidModelStateResponseFactory = ApiResponseFactory.CustomValidationErrorResponse;
+			});
 
 			// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 			builder.Services.AddEndpointsApiExplorer();
