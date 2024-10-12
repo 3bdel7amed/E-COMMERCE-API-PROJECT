@@ -17,17 +17,7 @@ namespace E_Commerce.API
 
 			// Add services to the container.
 
-			builder.Services.AddControllers().AddApplicationPart(typeof(Presentation.AssemblyReference).Assembly);
-			builder.Services.AddScoped<IDbInitializer, DbInitializer>();
-			builder.Services.AddScoped<IServiceManager, ServiceManager>();
-			builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-			builder.Services.AddAutoMapper(typeof(AssemblyReference).Assembly);
-			builder.Services.AddDbContext<StoreContext>
-				(o => o.UseSqlServer(builder.Configuration.GetConnectionString("DefaultSQLConnection")));
-			builder.Services.Configure<ApiBehaviorOptions>(Options =>
-			{
-				Options.InvalidModelStateResponseFactory = ApiResponseFactory.CustomValidationErrorResponse;
-			});
+			builder.Services.ContainerServices(builder.Configuration);
 
 			// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 			builder.Services.AddEndpointsApiExplorer();
