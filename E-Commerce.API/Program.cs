@@ -1,5 +1,6 @@
 
 
+using E_Commerce.API.MiddleWares;
 using Service;
 using Service.Abstraction;
 
@@ -27,6 +28,8 @@ namespace E_Commerce.API
 			builder.Services.AddSwaggerGen();
 
 			var app = builder.Build();
+
+			app.UseMiddleware<ErrorMiddleware>();
 
 			await DataSeeding(app);
 

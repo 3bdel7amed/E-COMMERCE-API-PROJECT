@@ -17,7 +17,6 @@ namespace Service.Specifications
 			(!brandId.HasValue || p.BrandId == brandId) &&
 			(string.IsNullOrWhiteSpace(search) || p.Name.ToUpper().Contains(search.ToUpper().Trim())))
         {
-            
         }
     }
 }
