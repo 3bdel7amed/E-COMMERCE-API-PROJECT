@@ -19,12 +19,30 @@ namespace E_Commerce.API.MiddleWares
 			try
 			{
 				await _next(context);
+				// if next done there is 2 scenarios
+				// => 1. successful response
+				// => 2. not found end point
+				//
+				// make sure that error occur
+				if (context.Response.StatusCode == (int)HttpStatusCode.NotFound)
+					await NotFoundEndPointHandleAsync(context);
 			}
 			catch (Exception ex)
 			{
 				_logger.LogError($"Error Massage => {ex}");
 				await ErrorHandleAsync(context, ex);
 			}
+		}
+
+		private async Task NotFoundEndPointHandleAsync(HttpContext context)
+		{
+			context.Response.ContentType = "application/json";
+			var ErrorModel = new ErrorDetails()
+			{
+				StatusCode = (int)HttpStatusCode.NotFound,
+				ErrorMessage = $"Not Found End Point With Path {context.Request.Path}"
+			}.ToString();
+			await context.Response.WriteAsync(ErrorModel);
 		}
 
 		private async Task ErrorHandleAsync(HttpContext context, Exception ex)
