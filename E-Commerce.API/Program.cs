@@ -1,11 +1,3 @@
-
-
-using E_Commerce.API.Factories;
-using E_Commerce.API.MiddleWares;
-using Microsoft.AspNetCore.Mvc;
-using Service;
-using Service.Abstraction;
-
 namespace E_Commerce.API
 {
 	public class Program

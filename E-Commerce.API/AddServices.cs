@@ -1,10 +1,4 @@
-﻿using E_Commerce.API.Factories;
-using Microsoft.AspNetCore.Mvc;
-using Service.Abstraction;
-using Service;
-using StackExchange.Redis;
-
-namespace E_Commerce.API
+﻿namespace E_Commerce.API
 {
 	public static class AddServices
 	{
@@ -28,7 +22,8 @@ namespace E_Commerce.API
 			services.AddSingleton<IConnectionMultiplexer>(_ => ConnectionMultiplexer.Connect(configuration.GetConnectionString("RedisDb")!));
 			// Basket Repo Service
 			services.AddScoped<IBasketRepo, BasketRepo>();
-			
+			// Basket Service
+			services.AddScoped<IBasketService, BasketService>();
 			
 			return services;
 		}
