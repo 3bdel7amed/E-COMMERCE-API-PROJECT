@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Entities
+namespace Shared
 {
-	public class BasketItem
+	public record BasketItemDto
 	{
 		public int Id { get; set; }
 		public string ProductName { get; set; }
@@ -16,6 +17,7 @@ namespace Domain.Entities
 		public decimal Price { get; set; }
 		public string BrandName { get; set; }
 		public string TypeName { get; set; }
-        public int Quantity { get; set; }
-    }
+		[Range(1,99)]
+		public int Quantity { get; set; }
+	}
 }

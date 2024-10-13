@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Persistence.Repos
 {
-	internal class BasketRepo : IBasketRepo
+	public class BasketRepo : IBasketRepo
 	{
 		readonly IDatabase database;
 		public BasketRepo(IConnectionMultiplexer connection) => database = connection.GetDatabase();
@@ -21,8 +21,8 @@ namespace Persistence.Repos
 		public async Task<CustomerBasket?> UpdateBasketAsync(CustomerBasket Basket)
 		{
 			var jsonBasket = JsonSerializer.Serialize(Basket);
-			bool CreateOrUpdateBasket = await database.StringSetAsync(Basket.Id, jsonBasket,TimeSpan.FromDays(10));
-			return CreateOrUpdateBasket ? await GetBasketAsync(Basket.Id) : null;
+			bool CreateOrUpdateBasket = await database.StringSetAsync(Basket.BasketId, jsonBasket,TimeSpan.FromDays(10));
+			return CreateOrUpdateBasket ? await GetBasketAsync(Basket.BasketId) : null;
 		}
 	}
 }

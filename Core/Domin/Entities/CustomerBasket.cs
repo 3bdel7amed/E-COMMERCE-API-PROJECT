@@ -8,7 +8,8 @@ namespace Domain.Entities
 {
 	public class CustomerBasket
 	{
-		public string Id { get; set; }
-        public IEnumerable<BasketItem> Items{ get; set; }
-    }
+		public string BasketId { get; set; }
+		public IEnumerable<BasketItem> Items { get; set; }
+		public CustomerBasket(string basketId) => BasketId = basketId;
+	}
 }
