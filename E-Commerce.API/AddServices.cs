@@ -2,12 +2,13 @@
 using Microsoft.AspNetCore.Mvc;
 using Service.Abstraction;
 using Service;
+using StackExchange.Redis;
 
 namespace E_Commerce.API
 {
 	public static class AddServices
 	{
-		public static IServiceCollection ContainerServices(this IServiceCollection services , IConfiguration configuration)
+		public static IServiceCollection ContainerServices(this IServiceCollection services, IConfiguration configuration)
 		{
 			services.AddControllers().AddApplicationPart(typeof(Presentation.AssemblyReference).Assembly);
 			services.AddScoped<IDbInitializer, DbInitializer>();
@@ -20,7 +21,7 @@ namespace E_Commerce.API
 			{
 				Options.InvalidModelStateResponseFactory = ApiResponseFactory.CustomValidationErrorResponse;
 			});
-
+			services.AddSingleton<IConnectionMultiplexer>(_ => ConnectionMultiplexer.Connect(configuration.GetConnectionString("RedisDb")!));
 			return services;
 		}
 	}
