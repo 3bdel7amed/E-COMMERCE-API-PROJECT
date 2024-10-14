@@ -1,4 +1,5 @@
 ﻿
+using Domain.Exceptions;
 using Service.Specifications;
 
 namespace Service
@@ -22,18 +23,26 @@ namespace Service
 			return TypesDto;
 		}
 
-		public async Task<IEnumerable<ProductResultDto>> GetProductsAsync()
+		public async Task<PaginatedResultDto<ProductResultDto>> GetProductsAsync(string? sort, int? brandId, int? typeId, int pageSize, int pageIndex, string? search)
 		{
-			var Products = await UnitOfWork.GetRepo<Product, int>().GetAllAsync(new ProductSpecifications());
-			var productsDto = Mapper.Map<IEnumerable<ProductResultDto>>(Products);
-			return productsDto;
+			var Products = await UnitOfWork.GetRepo<Product, int>().GetAllAsync(new ProductSpecifications(sort, brandId, typeId, pageSize, pageIndex, search));
+			var ProductsDto = Mapper.Map<IEnumerable<ProductResultDto>>(Products);
+			var totalProducts = await UnitOfWork.GetRepo<Product, int>().GetAllAsync(new PaginatedResultSpecifications(sort, brandId, typeId, pageSize, pageIndex, search));
+			var PaginatedResult = new PaginatedResultDto<ProductResultDto>(
+				ProductsDto.Count(),
+				pageIndex,
+				totalProducts.Count(),
+				ProductsDto);
+			return PaginatedResult;
 		}
 
 		public async Task<ProductResultDto> GetProductAsync(int Id)
 		{
 			var Product = await UnitOfWork.GetRepo<Product, int>().GetAsync(new ProductSpecifications(Id));
-			var productsDto = Mapper.Map<ProductResultDto>(Product);
-			return productsDto;
+			return Product is null ? throw new ProductNotFoundException(Id) :
+				Mapper.Map<ProductResultDto>(Product);
 		}
+
+
 	}
 }
