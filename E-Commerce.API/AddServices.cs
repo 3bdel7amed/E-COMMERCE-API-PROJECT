@@ -1,4 +1,6 @@
-﻿namespace E_Commerce.API
+﻿using Persistence.IdentityData;
+
+namespace E_Commerce.API
 {
 	public static class AddServices
 	{
@@ -24,6 +26,8 @@
 			services.AddScoped<IBasketRepo, BasketRepo>();
 			// Basket Service
 			services.AddScoped<IBasketService, BasketService>();
+			// Identity Db Service
+			services.AddDbContext<StoreIdentityContext>(o => o.UseSqlServer(configuration.GetConnectionString("IdentitySQLConnection")));
 			
 			return services;
 		}
