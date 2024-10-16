@@ -47,6 +47,7 @@ namespace E_Commerce.API
 			var initDb = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
 			// Call Initializer
 			await initDb.InitializerAsync();
+			await initDb.InitializerIdentityAsync();
 		}
 	}
 }

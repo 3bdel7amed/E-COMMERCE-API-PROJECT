@@ -1,5 +1,4 @@
-﻿using Persistence.IdentityData;
-
+﻿
 namespace E_Commerce.API
 {
 	public static class AddServices
@@ -28,7 +27,20 @@ namespace E_Commerce.API
 			services.AddScoped<IBasketService, BasketService>();
 			// Identity Db Service
 			services.AddDbContext<StoreIdentityContext>(o => o.UseSqlServer(configuration.GetConnectionString("IdentitySQLConnection")));
-			
+			// User & Role Manager Service
+			services.AddIdentity<User, IdentityRole>(o =>
+			{
+				o.Password.RequireLowercase=false;
+				o.Password.RequireUppercase=false;
+				o.Password.RequireNonAlphanumeric=false;
+				o.Password.RequireDigit=false;
+				//
+				o.Password.RequiredLength = 8;
+				o.User.RequireUniqueEmail = true;
+			}).AddEntityFrameworkStores<StoreIdentityContext>();
+
+
+
 			return services;
 		}
 	}
