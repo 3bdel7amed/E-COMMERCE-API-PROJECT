@@ -21,9 +21,15 @@ namespace Service
 			return mapper.Map<UserResultDto>(user) with { Token = "token" };
 		}
 
-		public Task<UserResultDto> RegisterAsync(RegisterResultDto registerModel)
+		public async Task<UserResultDto> RegisterAsync(RegisterResultDto registerModel)
 		{
-			throw new NotImplementedException();
+			var user = await userManager.CreateAsync
+				(mapper.Map<User>(registerModel), registerModel.Password);
+
+			if (!user.Succeeded) throw new ValidationException
+				(user.Errors.Select(e => e.Description).ToList());
+
+			return mapper.Map<UserResultDto>(user) with { Token = "token" };
 		}
 	}
 }

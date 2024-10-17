@@ -38,6 +38,9 @@ namespace E_Commerce.API
 				o.Password.RequiredLength = 8;
 				o.User.RequireUniqueEmail = true;
 			}).AddEntityFrameworkStores<StoreIdentityContext>();
+			// Authentication Service
+			services.AddScoped<IAuthenticationService, AuthenticationService>();
+
 
 
 
