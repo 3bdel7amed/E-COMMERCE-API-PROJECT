@@ -51,6 +51,7 @@ namespace E_Commerce.API.MiddleWares
 			context.Response.StatusCode = ex switch
 			{
 				NotFoundException => (int)HttpStatusCode.NotFound,
+				UnAuthorizedException => (int)HttpStatusCode.Unauthorized,
 				_=> (int)HttpStatusCode.InternalServerError // Default
 			};
 			// Set Content Type
