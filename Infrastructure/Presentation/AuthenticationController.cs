@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Shared.UserModels;
 
 namespace Presentation
 {
-	[ApiController]
+    [ApiController]
 	[Route("api/[controller]")]
 	public class AuthenticationController(IServiceManager serviceManager) : ControllerBase
 	{

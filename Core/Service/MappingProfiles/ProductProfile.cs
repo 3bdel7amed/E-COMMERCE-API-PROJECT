@@ -1,6 +1,8 @@
-﻿namespace Service.MappingProfiles
+﻿using Shared.ProductModels;
+
+namespace Service.MappingProfiles
 {
-	internal class ProductProfile : Profile
+    internal class ProductProfile : Profile
 	{
 		public ProductProfile()
 		{

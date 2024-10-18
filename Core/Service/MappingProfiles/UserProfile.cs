@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Shared.UserModels;
 
 namespace Service.MappingProfiles
 {
-	public class UserProfile : Profile
+    public class UserProfile : Profile
 	{
 		public UserProfile()
 		{

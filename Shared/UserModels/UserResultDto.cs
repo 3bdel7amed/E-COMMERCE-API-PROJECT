@@ -4,17 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Shared
+namespace Shared.UserModels
 {
-	public record UserResultDto
-	{
+    public record UserResultDto
+    {
         public string DisplayName { get; set; }
         public string Email { get; set; }
         public string Token { get; set; }
         public UserResultDto()
         {
-            
+
         }
     }
-	
+
 }

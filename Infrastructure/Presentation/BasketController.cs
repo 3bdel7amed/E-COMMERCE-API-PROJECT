@@ -1,6 +1,8 @@
-﻿namespace Presentation
+﻿using Shared.BasketModels;
+
+namespace Presentation
 {
-	[ApiController]
+    [ApiController]
 	[Route("api/[controller]")]
 	public class BasketController(IServiceManager serviceManager) : ControllerBase
 	{

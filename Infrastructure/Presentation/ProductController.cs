@@ -1,9 +1,13 @@
 ﻿
 
+using Microsoft.AspNetCore.Authorization;
+using Shared.ProductModels;
+
 namespace Presentation
 {
-	[ApiController]
+    [ApiController]
 	[Route("api/[controller]")]
+	[Authorize]
 	public class ProductController(IServiceManager ServiceManager) : ControllerBase
 	{
 		[HttpGet] // Index

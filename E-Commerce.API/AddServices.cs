@@ -1,4 +1,14 @@
 ﻿
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using Shared.UserModels;
+using System.Text;
+using Service.Abstraction;
+using Service;
+using IAuthenticationService = Microsoft.AspNetCore.Authentication.IAuthenticationService;
+using AuthenticationService = Microsoft.AspNetCore.Authentication.AuthenticationService;
+
 namespace E_Commerce.API
 {
 	public static class AddServices
@@ -39,11 +49,42 @@ namespace E_Commerce.API
 				o.User.RequireUniqueEmail = true;
 			}).AddEntityFrameworkStores<StoreIdentityContext>();
 			// Authentication Service
-			services.AddScoped<IAuthenticationService, AuthenticationService>();
+			services.AddScoped<IAuthenticationService,AuthenticationService>();
+			// Jwt Configure
+			services.Configure<JwtOptions>(configuration.GetSection("JwtOptions"));
+			// Jwt Add Configurations
+			services.JwtConfigurations(configuration);
 
 
 
 
+
+			return services;
+		}
+
+		private static IServiceCollection JwtConfigurations(this IServiceCollection services,IConfiguration configuration)
+		{
+			var jwtOptions = configuration.GetSection("JwtOptions").Get<JwtOptions>();
+
+			services.AddAuthentication(o =>
+			{
+				o.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+				o.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+			}).AddJwtBearer(o =>
+			{
+				o.TokenValidationParameters = new TokenValidationParameters
+				{
+					ValidateIssuer = true,
+					ValidateAudience = true,
+					ValidateLifetime = true,
+					ValidateIssuerSigningKey = true,
+
+					ValidAudience = jwtOptions.Audience,
+					ValidIssuer = jwtOptions.Issuer,
+					IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtOptions.SecretKey))
+				};
+			});
+			services.AddAuthorization(); // Policy
 			return services;
 		}
 	}

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
+using Shared.ProductModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace Service.MappingProfiles
 {
-	// Inject Config
-	internal class PictureResolver(IConfiguration configuration) : IValueResolver<Product, ProductResultDto, string>
+    // Inject Config
+    internal class PictureResolver(IConfiguration configuration) : IValueResolver<Product, ProductResultDto, string>
 	{
 		public string Resolve(Product source, ProductResultDto destination, string destMember, ResolutionContext context)
 		{
