@@ -6,6 +6,15 @@ using System.Threading.Tasks;
 
 namespace Shared
 {
-	public record UserResultDto(string DisplayName , string Email , string Token);
+	public record UserResultDto
+	{
+        public string DisplayName { get; set; }
+        public string Email { get; set; }
+        public string Token { get; set; }
+        public UserResultDto()
+        {
+            
+        }
+    }
 	
 }

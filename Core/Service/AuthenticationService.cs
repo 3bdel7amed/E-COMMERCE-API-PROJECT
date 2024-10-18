@@ -17,17 +17,22 @@ namespace Service
 			var result = await userManager.CheckPasswordAsync(user, loginModel.Password);
 			if (!result) throw new UnAuthorizedException();
 
-
 			return mapper.Map<UserResultDto>(user) with { Token = "token" };
 		}
 
 		public async Task<UserResultDto> RegisterAsync(RegisterResultDto registerModel)
 		{
-			var user = await userManager.CreateAsync
-				(mapper.Map<User>(registerModel), registerModel.Password);
+			var user = new User()
+			{
+				DespalyName = registerModel.DisplayName,
+				Email = registerModel.Email,
+				UserName = registerModel.DisplayName,
+				PhoneNumber = registerModel.PhoneNumber,
+			};
+			var result = await userManager.CreateAsync(user, registerModel.Password);
 
-			if (!user.Succeeded) throw new ValidationException
-				(user.Errors.Select(e => e.Description).ToList());
+			if (!result.Succeeded) throw new ValidationException
+				(result.Errors.Select(e => e.Description).ToList());
 
 			return mapper.Map<UserResultDto>(user) with { Token = "token" };
 		}
