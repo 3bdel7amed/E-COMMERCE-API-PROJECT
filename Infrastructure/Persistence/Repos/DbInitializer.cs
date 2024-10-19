@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Domain.Entities.OrderModule;
+using Microsoft.AspNetCore.Identity;
 using Persistence.Data;
 using Persistence.IdentityData;
 using System;
@@ -70,6 +71,19 @@ namespace Persistence.Repos
 					if (products is not null && products.Any())
 					{
 						await storeContext.Products.AddRangeAsync(products);
+						await storeContext.SaveChangesAsync();
+					}
+				}
+				if (!storeContext.DeliveryMethods.Any())
+				{
+					// Read As A String
+					var DeliveryMethodsFile = await File.ReadAllTextAsync(@"..\Infrastructure\Persistence\Data\DataSeeding\delivery.json");
+					// Transform To Obj
+					var deliveryMethods = JsonSerializer.Deserialize<List<DeliveryMethod>>(DeliveryMethodsFile);
+					// Add To DB & SaveChanges
+					if (deliveryMethods is not null && deliveryMethods.Any())
+					{
+						await storeContext.DeliveryMethods.AddRangeAsync(deliveryMethods);
 						await storeContext.SaveChangesAsync();
 					}
 				}
