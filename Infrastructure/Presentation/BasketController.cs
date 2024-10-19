@@ -1,10 +1,6 @@
-﻿using Shared.BasketModels;
-
-namespace Presentation
+﻿namespace Presentation
 {
-    [ApiController]
-	[Route("api/[controller]")]
-	public class BasketController(IServiceManager serviceManager) : ControllerBase
+	public class BasketController(IServiceManager serviceManager) : ApiController
 	{
 		[HttpGet("{BasketId}")] 
 		public async Task<ActionResult<CustomerBasketResultDto>> GetBasket(string BasketId)

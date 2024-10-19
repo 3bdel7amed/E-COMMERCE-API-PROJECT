@@ -1,16 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Shared.UserModels;
-
-namespace Presentation
+﻿namespace Presentation
 {
-    [ApiController]
-	[Route("api/[controller]")]
-	public class AuthenticationController(IServiceManager serviceManager) : ControllerBase
+	public class AuthenticationController(IServiceManager serviceManager) : ApiController
 	{
 		[HttpPost("Login")]
 		public async Task<ActionResult<UserResultDto>> Login(LoginResultDto model) =>
