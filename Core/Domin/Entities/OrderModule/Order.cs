@@ -25,7 +25,7 @@ namespace Domain.Entities.OrderModule
 
 		public string Email { get; set; }
 		public Address ShippingAddress { get; set; }
-		public ICollection<OrderItem> Items { get; set; }
+		public ICollection<OrderItem> Items { get; set; } = new List<OrderItem>();
 		public decimal SubTotal { get; set; }
 		public DeliveryMethod DeliveryMethod { get; set; }
 		public int? DeliveryMethodId { get; set; }
