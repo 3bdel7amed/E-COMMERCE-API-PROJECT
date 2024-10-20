@@ -8,7 +8,7 @@ namespace Shared.Order_Models
 {
 	public class OrderRequestDto
 	{
-        public int BasketId { get; set; }
+        public string BasketId { get; set; }
         public int DeliveryMethodId { get; set; }
         public AddressResultDto ShippingAddress { get; set; }
     }
