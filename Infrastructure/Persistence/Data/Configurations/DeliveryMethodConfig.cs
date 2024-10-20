@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace Persistence.Data.Configurations
 {
-	internal class DeliveryMethodConfig : IEntityTypeConfiguration<DeliveryMethod>
+	internal class DeliveryMethodConfig : IEntityTypeConfiguration<DeliveryMethods>
 	{
-		public void Configure(EntityTypeBuilder<DeliveryMethod> builder)
+		public void Configure(EntityTypeBuilder<DeliveryMethods> builder)
 		{
 			builder.Property(d=>d.Cost).HasColumnType("decimal(18,2)");
 		}

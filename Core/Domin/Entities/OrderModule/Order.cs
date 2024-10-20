@@ -13,7 +13,7 @@ namespace Domain.Entities.OrderModule
 			Address shippingAddress,
 			ICollection<OrderItem> items,
 			decimal subTotal,
-			DeliveryMethod deliveryMethod
+			DeliveryMethods deliveryMethod
 			)
 		{
 			Email = email;
@@ -27,7 +27,7 @@ namespace Domain.Entities.OrderModule
 		public Address ShippingAddress { get; set; }
 		public ICollection<OrderItem> Items { get; set; } = new List<OrderItem>();
 		public decimal SubTotal { get; set; }
-		public DeliveryMethod DeliveryMethod { get; set; }
+		public DeliveryMethods DeliveryMethod { get; set; }
 		public int? DeliveryMethodId { get; set; }
 		public string PaymentIntentId { get; set; } = string.Empty;
 		public DateTimeOffset Date { get; set; } = DateTimeOffset.Now;

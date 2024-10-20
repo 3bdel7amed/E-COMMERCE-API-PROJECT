@@ -12,7 +12,7 @@ namespace Service.MappingProfiles
 				ForMember(t => t.TypeName,
 				o => o.MapFrom(s => s.ProductType.Name)).
 				ForMember(p=>p.PictureUrl,
-				o=>o.MapFrom<PictureResolver>());
+				o=>o.MapFrom<PictureResolver<Product,ProductResultDto>>());
 			// class inherit from IValueResolver
 
 			CreateMap<ProductBrand, BrandResultDto>();

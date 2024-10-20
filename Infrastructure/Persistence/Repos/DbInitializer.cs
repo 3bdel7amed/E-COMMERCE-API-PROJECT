@@ -79,7 +79,7 @@ namespace Persistence.Repos
 					// Read As A String
 					var DeliveryMethodsFile = await File.ReadAllTextAsync(@"..\Infrastructure\Persistence\Data\DataSeeding\delivery.json");
 					// Transform To Obj
-					var deliveryMethods = JsonSerializer.Deserialize<List<DeliveryMethod>>(DeliveryMethodsFile);
+					var deliveryMethods = JsonSerializer.Deserialize<List<DeliveryMethods>>(DeliveryMethodsFile);
 					// Add To DB & SaveChanges
 					if (deliveryMethods is not null && deliveryMethods.Any())
 					{
