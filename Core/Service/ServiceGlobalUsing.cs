@@ -14,6 +14,7 @@ global using Shared.ProductModels;
 global using Microsoft.AspNetCore.Identity;
 global using Microsoft.Extensions.Options;
 global using Shared.UserModels;
+global using Microsoft.EntityFrameworkCore;
 
 global using Domain.Exceptions;
 global using Microsoft.AspNetCore.Identity;
