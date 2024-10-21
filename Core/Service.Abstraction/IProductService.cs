@@ -1,5 +1,4 @@
-﻿using Shared.ProductModels;
-
+﻿
 namespace Service.Abstraction
 {
     public interface IProductService

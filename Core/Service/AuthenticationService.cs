@@ -1,20 +1,11 @@
-﻿using Domain.Exceptions;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
-using Shared.UserModels;
-using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Security.Claims;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+using Microsoft.EntityFrameworkCore;
 
 namespace Service
 {
-    public class AuthenticationService(UserManager<User> userManager,IOptions<JwtOptions> jwtOptions, IMapper mapper) : IAuthenticationService
+	public class AuthenticationService
+		(UserManager<User> userManager, IOptions<JwtOptions> jwtOptions, IMapper mapper) :
+		IAuthenticationService
 	{
 		public async Task<UserResultDto> LoginAsync(LoginResultDto loginModel)
 		{
@@ -73,5 +64,48 @@ namespace Service
 			return new JwtSecurityTokenHandler().WriteToken(token);
 
 		}
+
+		public async Task<bool> CheckEmailAsync(string email)
+		{
+			return (await userManager.FindByEmailAsync(email)) != null;
+		}
+
+		public async Task<UserResultDto> GetCurrentUserAsync(string email)
+		{
+			var user = await userManager.FindByEmailAsync(email);
+			return user is not null ? mapper.Map<UserResultDto>(user)
+				with { Token = await GenerateTokenAsync(user) } :
+				throw new UserNotFoundException(email);
+		}
+
+		public async Task<AddressResultDto> GetAddressAsync(string email)
+		{
+			var address = (await userManager.Users.Include(u => u.Address).
+				FirstOrDefaultAsync(u => u.Email == email) ??
+				throw new UserNotFoundException(email)).Address;
+			return mapper.Map<AddressResultDto>(address);
+		}
+
+		public async Task<AddressResultDto> UpdateAddressAsync(string email, AddressResultDto address)
+		{
+			var user = await userManager.Users.Include(u => u.Address).
+				FirstOrDefaultAsync(u => u.Email == email) ??
+				throw new UserNotFoundException(email);
+			
+			if (address is not null)
+			{
+				user.Address.FirstName = address.FirstName;
+				user.Address.LastName = address.LastName;
+				user.Address.Phone = address.Phone;
+				user.Address.Street = address.Street;
+				user.Address.City = address.City;
+				user.Address.Country = address.Country;
+			}
+
+			await userManager.UpdateAsync(user);
+
+			return mapper.Map<AddressResultDto>(user.Address);
+		}
+
 	}
 }

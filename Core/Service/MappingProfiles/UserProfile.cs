@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Shared.UserModels;
+﻿using Address = Domain.Entities.Address;
 
 namespace Service.MappingProfiles
 {
@@ -11,6 +6,7 @@ namespace Service.MappingProfiles
 	{
 		public UserProfile()
 		{
+			CreateMap<Address,AddressResultDto>().ReverseMap();
 			CreateMap<User, UserResultDto>()
 			// بسبب خطا املائى 
 			.ForMember(d => d.DisplayName, s => s.MapFrom(u => u.DespalyName))

@@ -1,15 +1,12 @@
-﻿using Shared.UserModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Service.Abstraction
+﻿namespace Service.Abstraction
 {
     public interface IAuthenticationService
 	{
 		public Task<UserResultDto> LoginAsync(LoginResultDto loginModel);
 		public Task<UserResultDto> RegisterAsync(RegisterResultDto registerModel);
+		public Task<UserResultDto> GetCurrentUserAsync(string email);
+		public Task<bool> CheckEmailAsync(string email);
+		public Task<AddressResultDto> GetAddressAsync(string email);
+		public Task<AddressResultDto> UpdateAddressAsync(string email,AddressResultDto address);
 	}
 }

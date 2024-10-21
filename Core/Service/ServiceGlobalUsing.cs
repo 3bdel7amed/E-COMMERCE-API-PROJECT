@@ -15,3 +15,17 @@ global using Microsoft.AspNetCore.Identity;
 global using Microsoft.Extensions.Options;
 global using Shared.UserModels;
 
+global using Domain.Exceptions;
+global using Microsoft.AspNetCore.Identity;
+global using Microsoft.Extensions.Options;
+global using Microsoft.IdentityModel.Tokens;
+global using Shared.UserModels;
+global using System;
+global using System.Collections.Generic;
+global using System.IdentityModel.Tokens.Jwt;
+global using System.Linq;
+global using System.Security.Claims;
+global using System.Security.Cryptography;
+global using System.Threading.Tasks;
+global using System.Text;
+
