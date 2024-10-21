@@ -1,4 +1,5 @@
-﻿global using Shared;
+﻿global using Shared.Order_Models;
+global using Shared;
 global using Service.Abstraction;
 global using Microsoft.AspNetCore.Mvc;
 global using Microsoft.AspNetCore.Authorization;

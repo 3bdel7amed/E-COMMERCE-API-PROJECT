@@ -1,8 +1,4 @@
 ﻿
-using Domain.Exceptions;
-using Service.Specifications;
-using Shared.ProductModels;
-
 namespace Service
 {
     class ProductService(IUnitOfWork UnitOfWork, IMapper Mapper) : IProductService

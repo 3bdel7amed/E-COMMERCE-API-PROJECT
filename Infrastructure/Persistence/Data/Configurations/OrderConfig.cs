@@ -18,7 +18,7 @@ namespace Persistence.Data.Configurations
 
 			builder.Property(O => O.Status).HasConversion(S => S.ToString(), S => Enum.Parse<PaymentStatus>(S));
 
-			builder.HasOne(O => O.DeliveryMethod).WithOne().OnDelete(DeleteBehavior.SetNull);
+			builder.HasOne(O => O.DeliveryMethod).WithMany().OnDelete(DeleteBehavior.SetNull);
 
 			builder.Property(O => O.SubTotal).HasColumnType("decimal(18,2)");
 		}

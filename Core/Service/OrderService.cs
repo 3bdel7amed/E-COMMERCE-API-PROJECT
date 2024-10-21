@@ -1,13 +1,4 @@
-﻿using Domain.Entities.OrderModule;
-using OrderAddress = Domain.Entities.OrderModule.Address;
-using Shared.Order_Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Domain.Exceptions;
-using Service.Specifications;
+﻿
 
 namespace Service
 {
