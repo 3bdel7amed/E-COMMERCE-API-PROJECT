@@ -61,7 +61,6 @@ namespace Service
 				);
 
 			return new JwtSecurityTokenHandler().WriteToken(token);
-
 		}
 
 		public async Task<bool> CheckEmailAsync(string email)

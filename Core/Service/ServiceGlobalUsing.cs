@@ -6,16 +6,13 @@ global using Domain.Entities;
 global using Domain.Entities.OrderModule;
 global using OrderAddress = Domain.Entities.OrderModule.Address;
 global using Shared.Order_Models;
-
 global using Domain.Exceptions;
 global using Service.Specifications;
 global using Shared.ProductModels;
-
 global using Microsoft.AspNetCore.Identity;
 global using Microsoft.Extensions.Options;
 global using Shared.UserModels;
 global using Microsoft.EntityFrameworkCore;
-
 global using Domain.Exceptions;
 global using Microsoft.AspNetCore.Identity;
 global using Microsoft.Extensions.Options;
@@ -29,4 +26,8 @@ global using System.Security.Claims;
 global using System.Security.Cryptography;
 global using System.Threading.Tasks;
 global using System.Text;
+global using Microsoft.Extensions.Configuration;
+global using Shared.BasketModels;
+global using Stripe;
+global using Product = Domain.Entities.Product;
 
