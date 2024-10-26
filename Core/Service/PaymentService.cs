@@ -34,7 +34,7 @@
 				{
 					Amount = amount,
 					Currency = "USD",
-					PaymentMethod = "card"
+					PaymentMethodTypes = new List<string>() { "card" }
 				};
 				paymentIntent = await service.CreateAsync(options);
 

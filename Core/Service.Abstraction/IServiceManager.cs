@@ -7,6 +7,7 @@ namespace Service.Abstraction
 		public IBasketService BasketService();
 		public IAuthenticationService AuthenticationService();
 		public IOrderService OrderService();
+		public IPaymentService PaymentService();
 	
 	}
 }

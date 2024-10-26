@@ -8,8 +8,10 @@ namespace Service
 		{
 			var address = mapper.Map<OrderAddress>(request.ShippingAddress);
 
-			var basketItems = (await basketRepo.GetBasketAsync(request.BasketId)
-				?? throw new BasketNotFoundException(request.BasketId)).Items;
+			var basket = await basketRepo.GetBasketAsync(request.BasketId)
+				?? throw new BasketNotFoundException(request.BasketId);
+
+			var basketItems = basket.Items;
 
 			var orderItems = new List<OrderItem>();
 
@@ -29,14 +31,20 @@ namespace Service
 
 			var subTotal = orderItems.Sum(i => i.Price * i.Quantity);
 
+			var repo = unitOfWork.GetRepo<Order, Guid>();
+
+			var exOrder = await repo.GetAsync(new OrderWithPaymentIntent(basket.PaymentIntentId));
+			if (exOrder is not null) repo.Delete(exOrder);
+
 			var order = new Order(
 				email: email,
 				shippingAddress: address,
 				items: orderItems,
 				deliveryMethod: deliveryMethod,
-				subTotal: subTotal);
+				subTotal: subTotal,
+				paymentIntentId: basket.PaymentIntentId);
 
-			await unitOfWork.GetRepo<Order, Guid>().AddAsync(order);
+			await repo.AddAsync(order);
 			await unitOfWork.SaveChangesAsync();
 
 			return mapper.Map<OrderResultDto>(order);
@@ -44,17 +52,17 @@ namespace Service
 
 		public async Task<OrderResultDto> GetOrderByIdAsync(Guid id)
 		{
-			var order = await unitOfWork.GetRepo<Order,Guid>()
+			var order = await unitOfWork.GetRepo<Order, Guid>()
 				.GetAsync(new OrderSpecifications(id));
 			return order is null ? throw new OrderNotFoundException(id)
-				:mapper.Map<OrderResultDto>(order);
+				: mapper.Map<OrderResultDto>(order);
 		}
 
 		public async Task<IEnumerable<OrderResultDto>> GetOrdersByEmailAsync(string email)
 		{
 			var orders = await unitOfWork.GetRepo<Order, Guid>()
 				.GetAllAsync(new OrderSpecifications(email));
-			return orders is null ?new List<OrderResultDto>()
+			return orders is null ? new List<OrderResultDto>()
 				: mapper.Map<IEnumerable<OrderResultDto>>(orders);
 		}
 
@@ -62,7 +70,7 @@ namespace Service
 		{
 			var deliveryMethods = await unitOfWork.GetRepo<DeliveryMethods, int>()
 				.GetAllAsync();
-            return deliveryMethods is null ? new List<DeliveryMethodsResultDto>()
+			return deliveryMethods is null ? new List<DeliveryMethodsResultDto>()
 				: mapper.Map<IEnumerable<DeliveryMethodsResultDto>>(deliveryMethods);
 		}
 

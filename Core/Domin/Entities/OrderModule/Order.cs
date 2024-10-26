@@ -14,13 +14,15 @@ namespace Domain.Entities.OrderModule
 			ICollection<OrderItem> items,
 			decimal subTotal,
 			DeliveryMethods deliveryMethod
-			)
+,
+			string paymentIntentId)
 		{
 			Email = email;
 			ShippingAddress = shippingAddress;
 			Items = items;
 			SubTotal = subTotal;
 			DeliveryMethod = deliveryMethod;
+			PaymentIntentId = paymentIntentId;
 		}
 
 		public string Email { get; set; }
@@ -29,7 +31,7 @@ namespace Domain.Entities.OrderModule
 		public decimal SubTotal { get; set; }
 		public DeliveryMethods DeliveryMethod { get; set; }
 		public int? DeliveryMethodId { get; set; }
-		public string PaymentIntentId { get; set; } = string.Empty;
+		public string PaymentIntentId { get; set; } 
 		public DateTimeOffset Date { get; set; } = DateTimeOffset.Now;
 		public PaymentStatus Status { get; set; } = PaymentStatus.Pending;
 	}
