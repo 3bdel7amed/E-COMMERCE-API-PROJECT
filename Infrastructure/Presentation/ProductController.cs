@@ -1,10 +1,7 @@
-﻿
-
-namespace Presentation
+﻿namespace Presentation
 {
-	[ApiController]
-	[Route("api/[controller]")]
-	public class ProductController(IServiceManager ServiceManager) : ControllerBase
+	[Authorize]
+	public class ProductController(IServiceManager ServiceManager) : ApiController
 	{
 		[HttpGet] // Index
 		public async Task<ActionResult<PaginatedResultDto<ProductResultDto>>> GetProducts(string?sort, int? brandId,int? typeId,int pageSize = 10,int pageIndex = 1,string?search="")

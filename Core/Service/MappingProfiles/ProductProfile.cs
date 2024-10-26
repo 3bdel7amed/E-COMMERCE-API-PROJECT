@@ -1,6 +1,8 @@
-﻿namespace Service.MappingProfiles
+﻿using Shared.ProductModels;
+
+namespace Service.MappingProfiles
 {
-	internal class ProductProfile : Profile
+    internal class ProductProfile : Profile
 	{
 		public ProductProfile()
 		{
@@ -10,7 +12,7 @@
 				ForMember(t => t.TypeName,
 				o => o.MapFrom(s => s.ProductType.Name)).
 				ForMember(p=>p.PictureUrl,
-				o=>o.MapFrom<PictureResolver>());
+				o=>o.MapFrom<PictureResolver<Product,ProductResultDto>>());
 			// class inherit from IValueResolver
 
 			CreateMap<ProductBrand, BrandResultDto>();

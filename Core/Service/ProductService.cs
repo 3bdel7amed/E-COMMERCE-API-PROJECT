@@ -1,10 +1,7 @@
 ﻿
-using Domain.Exceptions;
-using Service.Specifications;
-
 namespace Service
 {
-	class ProductService(IUnitOfWork UnitOfWork, IMapper Mapper) : IProductService
+    class ProductService(IUnitOfWork UnitOfWork, IMapper Mapper) : IProductService
 	{
 		public async Task<IEnumerable<BrandResultDto>> GetBrandsAsync()
 		{

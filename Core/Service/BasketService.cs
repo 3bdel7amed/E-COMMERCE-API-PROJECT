@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Shared.BasketModels;
 
 namespace Service
 {
-	public class BasketService : IBasketService
+    public class BasketService : IBasketService
 	{
 		readonly IBasketRepo basketRepo;
 		readonly IMapper mapper;

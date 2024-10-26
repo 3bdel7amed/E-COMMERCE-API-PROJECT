@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace Domain.Exceptions
 {
-	public class ProductNotFoundException : NotFoundException
+	public class ProductNotFoundException(int id) 
+		: NotFoundException($"Product With Id {id} Is Not Found!")
 	{
-		public ProductNotFoundException(int id) : base($"Product With Id {id} Not Found!")
-		{
-		}
+		
 	}
 }

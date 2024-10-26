@@ -1,8 +1,7 @@
-﻿using Shared;
-
+﻿
 namespace Service.Abstraction
 {
-	public interface IProductService
+    public interface IProductService
 	{
 		// Get All Brands
 		public Task<IEnumerable<BrandResultDto>> GetBrandsAsync();

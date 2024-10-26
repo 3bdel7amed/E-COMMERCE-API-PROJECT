@@ -9,5 +9,6 @@ namespace Domain.Contracts.IRepos
 	public interface IDbInitializer
 	{
 		public Task InitializerAsync();
+		public Task InitializerIdentityAsync();
 	}
 }

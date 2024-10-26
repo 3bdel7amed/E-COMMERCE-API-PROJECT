@@ -31,6 +31,7 @@ namespace E_Commerce.API
 
 			app.UseHttpsRedirection();
 
+			app.UseAuthentication();
 			app.UseAuthorization();
 
 			app.MapControllers();
@@ -47,6 +48,7 @@ namespace E_Commerce.API
 			var initDb = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
 			// Call Initializer
 			await initDb.InitializerAsync();
+			await initDb.InitializerIdentityAsync();
 		}
 	}
 }

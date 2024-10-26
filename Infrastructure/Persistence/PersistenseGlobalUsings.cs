@@ -7,6 +7,7 @@ global using System.Text.Json;
 global using Domain.Entities;
 global using Microsoft.EntityFrameworkCore;
 global using Domain.Contracts.IRepos;
+global using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 
 

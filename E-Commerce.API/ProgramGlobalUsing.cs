@@ -13,3 +13,6 @@ global using E_Commerce.API.MiddleWares;
 global using Microsoft.AspNetCore.Mvc;
 global using Service;
 global using Service.Abstraction;
+global using Domain.Entities;
+global using Microsoft.AspNetCore.Identity;
+global using Persistence.IdentityData;
