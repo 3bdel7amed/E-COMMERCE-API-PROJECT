@@ -57,5 +57,44 @@
 			// Return
 			return mapper.Map<CustomerBasketResultDto>(basket);
 		}
+
+		public async Task UpdatePaymentStatusAsync(string request, string header)
+		{
+			var endPoint = configuration.GetRequiredSection("Stripe")["EndPointSecret"];
+			var stripeEvent = EventUtility.ConstructEvent(request, header, endPoint);
+			var paymentIntent = stripeEvent.Data.Object as PaymentIntent;
+
+			switch (stripeEvent.Type)
+			{
+				case EventTypes.PaymentIntentPaymentFailed:
+					await UpdatePaymentIntentFailed(paymentIntent.Id);
+					break;
+				case EventTypes.PaymentIntentSucceeded:
+					await UpdatePaymentIntentSucceeded(paymentIntent.Id);
+
+					break;
+			}
+
+
+			throw new NotImplementedException();
+		}
+
+		private async Task UpdatePaymentIntentFailed(string id)
+		{
+			var order = await unitOfWork.GetRepo<Order, Guid>().GetAsync(new OrderWithPaymentIntent(id))
+				?? throw new NotFoundException("Order Not Found!");
+			order.Status = PaymentStatus.Failed;
+			unitOfWork.GetRepo<Order, Guid>().Update(order);
+			await unitOfWork.SaveChangesAsync();
+		}
+
+		private async Task UpdatePaymentIntentSucceeded(string id)
+		{
+			var order = await unitOfWork.GetRepo<Order, Guid>().GetAsync(new OrderWithPaymentIntent(id))
+							?? throw new NotFoundException("Order Not Found!");
+			order.Status = PaymentStatus.Received;
+			unitOfWork.GetRepo<Order, Guid>().Update(order);
+			await unitOfWork.SaveChangesAsync();
+		}
 	}
 }
